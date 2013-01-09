@@ -38,6 +38,7 @@ body common control
             "services/apache/apache_main.cf",
             "services/apache/apache_install.cf",
             "services/apache/apache_check_process.cf",
+            "services/hardwareinfo/hardwareinfo_cpu.cf",
            };
 
  version => "Community Promises.cf 3.4.0";

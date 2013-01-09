@@ -1,0 +1,22 @@
+# Report type of CPU and number of core(s)
+bundle agent hardwareinfo_cpu
+{
+  vars:
+    "module_name"    string => "analyzeCPU.sh";
+    "module_path"    string => "/tmp/CFEngine3_masterfiles_example/modules/${module_name}";
+#    "module_path"    string => "${sys.workdir}/modules/${module_name}";
+    "module_context" string => canonify("${module_name}");
+
+  files:
+    "${module_path}"
+      perms => mog("755", "root", "root");
+
+  commands:
+    "${module_path}"
+      module => "true";
+
+  reports:
+    GenuineIntel::
+      "This machine contains an Intel CPU with ${${module_context}.nb_cpu_core} core(s)";
+      
+}
