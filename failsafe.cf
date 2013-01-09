@@ -6,8 +6,8 @@
 
 body common control
 {
- bundlesequence => { "update", "git_update" };
- inputs => { "./librairies/vcs_mirror.cf" };
+ bundlesequence => { "git_update", "update" };
+ inputs => { "./libraries/vcs_mirror.cf" };
  version => "Community Failsafe.cf 3.4.0";
 }
 
