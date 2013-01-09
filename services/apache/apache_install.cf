@@ -7,7 +7,7 @@ bundle agent apache_install
       string => "apache2",
       policy => "free";
 
-  packagse:
+  packages:
     "${apache_install.www_package}"
       package_policy => "add",
       package_method => "generic",
