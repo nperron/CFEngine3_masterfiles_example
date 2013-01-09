@@ -10,7 +10,7 @@ bundle agent apache_install
   packages:
     "${apache_install.www_package}"
       package_policy => "add",
-      package_method => "generic",
+      package_method => generic,
       comment => "Check that ${www_package} is installed",
       classes => kept_if_else("${www_package}_install_kept", "${www_package}_install_repaired", "${www_package}_install_error");
 }
