@@ -12,14 +12,15 @@ bundle agent apache_check_process
     "${www_package}[legal_process_name]" string => canonify("/usr/sbin/apache2 -k start");
 
   processes:
-    apache_install_kept|apache_install_repaired::
-      "${www_package[process]}"
-        process_count => check_range("${www_package[process]}", 1, 5),
-        comment       => "Check that ${www_package} is up";
+    "${${www_package}[process]}"
+      process_count => check_range("${${www_package}[process]}", 1, 5),
+      comment       => "Check that ${www_package} is up",
+      ifvarclass => "${www_package}_install_kept|${www_package}_install_repaired";
 
   commands:
-    "${www_package[init]}"
+    "${${www_package}[init]}"
       args       => "restart",
       comment    => "Restarting ${www_package}",
-      ifvarclass => "${www_package[legal_process_name]}_out_of_range";
+      ifvarclass => "${${www_package}[legal_process_name]}_out_of_range";
+
 }
