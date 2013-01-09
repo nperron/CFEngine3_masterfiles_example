@@ -7,7 +7,7 @@
 body common control
 {
  bundlesequence => { "git_update", "update" };
- inputs => { "./libraries/vcs_mirror.cf" };
+ inputs => { "./libraries/cfengine_stdlib.cf", "./libraries/vcs_mirror.cf" };
  version => "Community Failsafe.cf 3.4.0";
 }
 
