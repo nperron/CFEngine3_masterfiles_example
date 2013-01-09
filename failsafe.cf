@@ -181,6 +181,9 @@ bundle agent git_update
 {
 # This bundle should be only used by the policy hub
 # Get promises from github
+  classes:
+    "masterfiles_repo_prefixnowipe" expression => "any";
+
   vars:
     "masterfiles_repo_prefix"       string => "git_update.masterfiles_repo_";
     "masterfiles_repo_class_prefix" string => "default:masterfiles_repo_";
@@ -199,7 +202,7 @@ bundle agent git_update
                                        ${git_update.masterfiles_repo_origin},
                                        ${git_update.masterfiles_repo_branch},
                                        ${git_update.masterfiles_repo_runas},
-                                       ${git_update.masterfiles_repo_umask}};
+                                       ${git_update.masterfiles_repo_umask});
 }
 
 #########################################################
