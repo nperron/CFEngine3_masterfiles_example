@@ -1,4 +1,5 @@
 # Check that apache is up if it have been installed
+# Return www_service_kept, www_service_repaired or www_service_error
 bundle agent apache_check_process
 {
   vars:
@@ -11,16 +12,26 @@ bundle agent apache_check_process
     "${www_package}[process]" string => "/usr/sbin/apache2 -k start";
     "${www_package}[legal_process_name]" string => canonify("/usr/sbin/apache2 -k start");
 
-  processes:
-    "${${www_package}[process]}"
-      process_count => check_range("${${www_package}[process]}", 1, 5),
-      comment       => "Check that ${www_package} is up",
+ services:
+   "www"
+      service_policy => "start",
+      service_method => www_service,
+      classes => kept_if_else("www_service_kept", "www_service_repaired", "www_service_error"),
       ifvarclass => "${www_package}_install_kept|${www_package}_install_repaired";
 
-  commands:
-    "${${www_package}[init]}"
-      args       => "restart",
-      comment    => "Restarting ${www_package}",
-      ifvarclass => "${${www_package}[legal_process_name]}_out_of_range";
+  reports:
+    www_service_kept::
+      "${www_package} is UP";
+    www_service_repaired::
+      "${www_package} has been (re)started";
+    www_service_error::
+      "${www_package} is DOWN and has not been started";
 
+}
+
+body service_method www_service
+{
+    service_bundle => standard_services("$(this.promiser)","$(this.service_policy)");
+  windows::
+    service_type => "windows";
 }
