@@ -13,8 +13,8 @@ body executor control
 
   splaytime  => "1";
   mailto     => "npe@normation.com";
-  mailfrom   => "nicolas.perron@normation.com";
-  smtpserver => "smtp.normation.com";
+  mailfrom   => "no-reply@normation.com";
+  smtpserver => "mail.normation.com";
 
 # Default:
 #
