@@ -6,12 +6,7 @@
 
 body common control
 {
-  # Do not clone git repository if not policy hub
-  am_policy_hub::
-    bundlesequence => { "git_update", "update" };
-  !am_policy_hub::
-    bundlesequence => { "update" };
-
+ bundlesequence => { "update" };
  inputs => { "./libraries/cfengine_stdlib.cf", "./libraries/vcs_mirror.cf" };
  version => "Community Failsafe.cf 3.4.0";
 }
@@ -175,6 +170,11 @@ bundle agent update
              perms => u_m("644"),
       depth_search => u_recurse_basedir("inf"),
             action => u_immediate;
+
+  # Do not clone git repository if not policy hubo
+  methods:
+    am_policy_hub::
+      "any" usebundle => git_update;
 }
 
 bundle agent git_update
