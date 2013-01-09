@@ -6,7 +6,12 @@
 
 body common control
 {
- bundlesequence => { "git_update", "update" };
+  # Do not clone git repository if not policy hub
+  am_policy_hub::
+    bundlesequence => { "git_update", "update" };
+  !am_policy_hub::
+    bundlesequence => { "update" };
+
  inputs => { "./libraries/cfengine_stdlib.cf", "./libraries/vcs_mirror.cf" };
  version => "Community Failsafe.cf 3.4.0";
 }
@@ -174,26 +179,27 @@ bundle agent update
 
 bundle agent git_update
 {
-
+# This bundle should be only used by the policy hub
+# Get promises from github
   vars:
-      "masterfiles_repo_prefix" string => "git_update.masterfiles_repo_";
-      "masterfiles_repo_class_prefix" string => "default:masterfiles_repo_";
-      "masterfiles_repo_vcs" string => "/usr/bin/git";
-      "masterfiles_repo_path" string => "/var/cfengine-masterfiles-base";
-      "masterfiles_repo_origin" string => "https://github.com/nperron/CFEngine3_masterfiles_example.git";
-      "masterfiles_repo_branch" string => "master";
-      "masterfiles_repo_runas" string => "root";
-      "masterfiles_repo_umask" string => "022";
+    "masterfiles_repo_prefix"       string => "git_update.masterfiles_repo_";
+    "masterfiles_repo_class_prefix" string => "default:masterfiles_repo_";
+    "masterfiles_repo_vcs"          string => "/usr/bin/git";
+    "masterfiles_repo_path"         string => "/var/cfengine/masterfiles";
+    "masterfiles_repo_origin"       string => "https://github.com/nperron/CFEngine3_masterfiles_example.git";
+    "masterfiles_repo_branch"       string => "master";
+    "masterfiles_repo_runas"        string => "root";
+    "masterfiles_repo_umask"        string => "022";
 
   methods:
-      "1" usebundle => cfdc_vcs:mirror($(git_update.masterfiles_repo_prefix),
-                                       $(git_update.masterfiles_repo_class_prefix),
-                                       $(git_update.masterfiles_repo_vcs),
-                                       $(git_update.masterfiles_repo_path),
-                                       $(git_update.masterfiles_repo_origin),
-                                       $(git_update.masterfiles_repo_branch),
-                                       $(git_update.masterfiles_repo_runas),
-                                       $(git_update.masterfiles_repo_umask));
+    "1" usebundle => cfdc_vcs:mirror(${git_update.masterfiles_repo_prefix},
+                                       ${git_update.masterfiles_repo_class_prefix},
+                                       ${git_update.masterfiles_repo_vcs},
+                                       ${git_update.masterfiles_repo_path},
+                                       ${git_update.masterfiles_repo_origin},
+                                       ${git_update.masterfiles_repo_branch},
+                                       ${git_update.masterfiles_repo_runas},
+                                       ${git_update.masterfiles_repo_umask}};
 }
 
 #########################################################
