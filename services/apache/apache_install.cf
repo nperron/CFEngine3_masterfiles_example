@@ -1,0 +1,16 @@
+# Install apache if not present
+# Return classes: apache_install_kept, apache_install_repaired or apache_install_error
+bundle agent apache_install
+{
+  vars:
+    "www_package"
+      string => "apache2",
+      policy => "free";
+
+  packagse:
+    "${apache_install.www_package}"
+      package_policy => "add",
+      package_method => "generic",
+      comment => "Check that ${www_package} is installed",
+      classes => kept_if_else("${www_package}_install_kept", "${www_package}_install_repaired", "${www_package}_install_error");
+}

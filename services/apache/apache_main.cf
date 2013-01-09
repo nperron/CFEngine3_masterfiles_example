@@ -1,0 +1,8 @@
+# Main bundle to check apache service
+bundle agent apache_main
+{
+  methods:
+    "1" usebundle => apache_install;
+
+    "2" usebundle => apache_check_process;
+}

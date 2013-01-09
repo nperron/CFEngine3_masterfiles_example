@@ -29,11 +29,15 @@ body common control
             "controls/cf_serverd.cf",
          # COPBL/Custom libraries
             "libraries/cfengine_stdlib.cf",
+            "libraries/classes_lib.cf",
          # Design Center
              # MARKER FOR CF-SKETCH INPUT INSERTION
              "cf-sketch-runfile.cf",
          # User services from here
             "services/init_msg.cf",
+            "services/apache_main.cf",
+            "services/apache_install.cf",
+            "services/apache_check_process.cf",
            };
 
  version => "Community Promises.cf 3.4.0";
@@ -53,6 +57,9 @@ bundle agent main
    "INIT MSG" usebundle => init_msg,
                 comment => "Just a pre-defined policy bundled with the package",
                  handle => "main_methods_any_init_msg";
+
+   # Manage Apache (Install and check that it is up)
+   "Apache Service" usebundle => apache_main;
 
 }
 

@@ -1,0 +1,11 @@
+# Contains all bodies classes defined for the project
+
+#Define three classes 
+body classes kept_if_else(kept,repaired,error)
+{
+  promise_kept     => { "$(kept)" };
+  promise_repaired => { "$(repaired)" };
+  repair_failed    => { "$(error)" };
+  repair_denied    => { "$(error)" };
+  repair_timeout   => { "$(error)" };
+}
