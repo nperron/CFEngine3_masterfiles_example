@@ -18,9 +18,9 @@ body executor control
 
 # Default:
 #
-# schedule => { "Min00", "Min05", "Min10", "Min15", "Min20", 
-#               "Min25", "Min30", "Min35", "Min40", "Min45",
-#               "Min50", "Min55" };
+ schedule => { "Min00_05", "Min05_10", "Min10_15", "Min15_20", "Min20_25", 
+               "Min25_30", "Min30_35", "Min35_40", "Min40_45", "Min45_50",
+               "Min50_55", "Min55_00" };
 
   exec_command => "$(sys.cf_twin) -f $(sys.workdir)/inputs/failsafe.cf && $(sys.cf_agent)";
 
