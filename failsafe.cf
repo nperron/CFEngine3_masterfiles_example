@@ -6,7 +6,8 @@
 
 body common control
 {
- bundlesequence => { "update" };
+ bundlesequence => { "update", "git_update" };
+ inputs => { "./librairies/vcs_mirror.cf" };
  version => "Community Failsafe.cf 3.4.0";
 }
 
@@ -169,6 +170,29 @@ bundle agent update
              perms => u_m("644"),
       depth_search => u_recurse_basedir("inf"),
             action => u_immediate;
+}
+
+bundle agent git_update
+{
+  vars:
+      "masterfiles_repo_prefix" string => "git_update.masterfiles_repo_";
+      "masterfiles_repo_class_prefix" string => "default:masterfiles_repo_";
+      "masterfiles_repo_vcs" string => "/usr/bin/git";
+      "masterfiles_repo_path" string => "/var/cfenfine/masterfiles";
+      "masterfiles_repo_origin" string => "https://github.com/nperron/CFEngine3_masterfiles_example.git";
+      "masterfiles_repo_branch" string => "master";
+      "masterfiles_repo_runas" string => "root";
+      "masterfiles_repo_umask" string => "022";
+
+  methods:
+      "1" usebundle => cfdc_vcs:mirror($(git_update.masterfiles_repo_prefix),
+                                       $(git_update.masterfiles_repo_class_prefix),
+                                       $(git_update.masterfiles_repo_vcs),
+                                       $(git_update.masterfiles_repo_path),
+                                       $(git_update.masterfiles_repo_origin),
+                                       $(git_update.masterfiles_repo_branch),
+                                       $(git_update.masterfiles_repo_runas),
+                                       $(git_update.masterfiles_repo_umask));
 }
 
 #########################################################
