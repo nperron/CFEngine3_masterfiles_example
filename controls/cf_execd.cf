@@ -12,9 +12,9 @@ body executor control
  any::
 
   splaytime  => "1";
-  mailto     => "cfengine@$(def.domain)";
-  mailfrom   => "cfengine@$(sys.host)\.$(def.domain)";
-  smtpserver => "localhost";
+  mailto     => "npe@normation.com";
+  mailfrom   => "nicolas.perron@normation.com";
+  smtpserver => "smtp.normation.com";
 
 # Default:
 #
