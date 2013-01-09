@@ -16,8 +16,7 @@ body executor control
   mailfrom   => "no-reply@normation.com";
   smtpserver => "mail.normation.com";
 
-# Default:
-#
+# Schedule cf-execd to launch cf-agent every single minute
  schedule => {
               "Min00","Min01","Min02","Min03","Min04","Min05","Min06","Min07",
               "Min08","Min09","Min10","Min11","Min12","Min13","Min14","Min15",
