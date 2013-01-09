@@ -35,9 +35,9 @@ body common control
              "cf-sketch-runfile.cf",
          # User services from here
             "services/init_msg.cf",
-            "services/apache_main.cf",
-            "services/apache_install.cf",
-            "services/apache_check_process.cf",
+            "services/apache/apache_main.cf",
+            "services/apache/apache_install.cf",
+            "services/apache/apache_check_process.cf",
            };
 
  version => "Community Promises.cf 3.4.0";
